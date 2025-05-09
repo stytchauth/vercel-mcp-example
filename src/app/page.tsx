@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useStytchUser } from "@stytch/nextjs";
-import Login from "@/src/components/Login";
+import { Login } from "@/src/components/Auth";
 
 export default function LoginPage() {
   const { user, isInitialized } = useStytchUser();

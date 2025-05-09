@@ -1,4 +1,4 @@
-import Authenticate from "@/src/components/Authenticate";
+import { Authenticate } from "@/src/components/Auth";
 
 export default function AuthenticatePage() {
   return <Authenticate />;

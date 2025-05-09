@@ -2,19 +2,18 @@
 
 import React from "react";
 import { useStytch, useStytchSession, useStytchUser } from "@stytch/nextjs";
+import { Logout, withLoginRequired } from "@/src/components/Auth";
 
 /**
  * The Profile component is shown to a user that is logged in.
- * 
- * This component renders the full User and Session object for education. 
- * 
+ *
+ * This component renders the full User and Session object for education.
+ *
  * This component also includes a log out button which is accomplished by making a method call to revoking the existing session.
-*/
-const Profile = () => {
+ */
+const Profile = withLoginRequired(() => {
   const stytch = useStytch();
-  // Get the Stytch User object if available
   const { user } = useStytchUser();
-  // Get the Stytch Session object if available
   const { session } = useStytchSession();
 
   return (
@@ -36,11 +35,9 @@ const Profile = () => {
         <span className="code">stytch_session_jwt</span> respectively.
       </p>
       {/* Revoking the session results in the session being revoked and cleared from browser storage. The user will return to Login.js. */}
-      <button className="primary" onClick={() => stytch.session.revoke()}>
-        Log out
-      </button>
+      <Logout />
     </div>
   );
-};
+});
 
 export default Profile;
