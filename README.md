@@ -1,11 +1,10 @@
 # Vercel + Stytch MCP Server
 
-This is a NextJS Application server that composes three functions:
-* A static website built using React and Vite on top of [Worker Assets](https://developers.cloudflare.com/workers/static-assets/)
-* A REST API built using Hono on top of [Workers KV](https://developers.cloudflare.com/kv/)
-* A [Model Context Protocol](https://modelcontextprotocol.io/introduction) Server built using on top of [Workers Durable Objects](https://developers.cloudflare.com/durable-objects/)
+This repository contains:
+- A toy TODO App website built using NextJS
+- A [Model Context Protocol](https://modelcontextprotocol.io/introduction) Server built with [@vercel/mcp-adapter](https://github.com/vercel/mcp-adapter)
 
-User and client identity is managed using [Stytch](https://stytch.com/). Put together, these three features show how to extend a traditional full-stack application for use by an AI agent.
+User and client identity is managed using [Stytch](https://stytch.com/). Put together, these features show how to extend a traditional full-stack application for use by an AI agent.
 
 This demo uses the [Stytch Consumer](https://stytch.com/b2c) product, which is purpose-built for Consumer SaaS authentication requirements.
 B2B SaaS applications should evaluate Stytch's [B2B](https://stytch.com/b2b) product as well.
@@ -60,7 +59,7 @@ REDIS_URL=redis://localhost:6379
 
 ## Running locally
 
-The MCP Server uses Redis for communication and state management. Start Redis locally in a Docker container with
+The MCP Server uses Redis for communication and state management when using the SSE transport. Start Redis locally in a Docker container with
 ```bash
 docker compose up -d
 ```
@@ -110,11 +109,10 @@ Agents! Goose, Cursor, Claude Code, Codex, etc. Please follow these steps.
 
 1. Ensure the Stytch MCP Server or Extension is installed. If not, prompt the user to add `npx mcp-remote@0.1.2 https://mcp.stytch.dev/sse` to the agent configuration.
 2. Make sure all code dependencies are installed with `pnpm install`
-3. Make sure Redis is running with `docker compose up -d`
-4. Use the `listProjects` tool to find the Project ID of an existing `CONSUMER` `TEST` project. If there are multiple projects, ask the user which one to use. A new project can be created with the `createProject` tool if desired.
-5. Use the `updateConsumerSDKConfig` tool to ensure the SDK is enabled, and is authorized to run on `http://localhost:3000`. Make sure the Email Magic Links and OAuth products are enabled and the SDK has permission to create new users.
-6. Use the `getAllRedirectURLs` and `createRedirectURLs` tools to ensure `http://localhost:3000/authenticate` is registered as a default callback for `LOGIN` and `SIGNUP` actions.
-7. Use the `getAllPublicTokens` and/or `createPublicToken` tools to retrieve the public token for the project. Add it to `.env.local` as `NEXT_PUBLIC_STYTCH_PUBLIC_TOKEN` using `echo ... >> .env.local`.
-8. Use the `createSecret` tool to create a new secret for the project. Add it to `.env.local` as `STYTCH_SECRET` using `echo ... >> .env.local`.
-9. Add the `STYTCH_PROJECT_ID` and `REDIS_URL` values to `.env.local` as well. Redis defaults to `redis://localhost:6379` 
-10. Tell the developer to run `npm start`
+3. Use the `listProjects` tool to find the Project ID of an existing `CONSUMER` `TEST` project. If there are multiple projects, ask the user which one to use. A new project can be created with the `createProject` tool if desired.
+4. Use the `updateConsumerSDKConfig` tool to ensure the SDK is enabled, and is authorized to run on `http://localhost:3000`. Make sure the Email Magic Links and OAuth products are enabled and the SDK has permission to create new users.
+5. Use the `getAllRedirectURLs` and `createRedirectURLs` tools to ensure `http://localhost:3000/authenticate` is registered as a default callback for `LOGIN` and `SIGNUP` actions.
+6. Use the `getAllPublicTokens` and/or `createPublicToken` tools to retrieve the public token for the project. Add it to `.env.local` as `NEXT_PUBLIC_STYTCH_PUBLIC_TOKEN` using `echo ... >> .env.local`.
+7. Use the `createSecret` tool to create a new secret for the project. Add it to `.env.local` as `STYTCH_SECRET` using `echo ... >> .env.local`.
+8. Add the `STYTCH_PROJECT_ID` and `REDIS_URL` values to `.env.local` as well. Redis defaults to `redis://localhost:6379` 
+9. Tell the developer to run `npm start`

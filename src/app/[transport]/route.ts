@@ -54,7 +54,7 @@ const authenticatedHandler = async (req: NextRequest) => {
     initializeMCPServer(validationResult.claims),
     {},
     {
-      redisUrl: process.env.REDIS_URL,
+      // redisUrl: process.env.REDIS_URL,
       basePath: "",
       verboseLogs: true,
       maxDuration: 60,
