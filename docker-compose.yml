@@ -1,0 +1,12 @@
+services:
+  redis:
+    image: redis:5.0.10-alpine
+    command:
+      # Clear the default save config, because we don't ever want to write to disk.
+      - --save
+      - ""
+      # We don't need durability, so don't worry about the append-only file (AOF).
+      - --appendonly
+      - "no"
+    ports:
+      - "6379:6379"

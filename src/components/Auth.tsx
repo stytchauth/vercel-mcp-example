@@ -49,7 +49,7 @@ const onLoginComplete = (router: AppRouterInstance) => {
   if (returnTo) {
     router.push(returnTo);
   } else {
-    router.push("/apikey");
+    router.push("/todos");
   }
 };
 
@@ -118,5 +118,5 @@ export const Logout = function () {
 
   if (!user) return null;
 
-  return <button onClick={() => stytch.session.revoke()}> Log Out </button>;
+  return <button type="submit" className="primary" onClick={() => stytch.session.revoke()}> Log Out </button>;
 };

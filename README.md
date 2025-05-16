@@ -1,8 +1,4 @@
-# Stytch Next.js App Router example application
-
-<p align="center">
-  <img src="https://github.com/stytchauth/stytch-nextjs-app-router-example/assets/159091081/49d93c38-e68c-4709-b54a-afa871d5e3a4" width="880">
-</p>
+# Vercel + Stytch MCP Server
 
 ## Overview
 
