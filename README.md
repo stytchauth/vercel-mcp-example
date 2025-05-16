@@ -1,12 +1,14 @@
 # Vercel + Stytch MCP Server
 
-## Overview
+This is a NextJS Application server that composes three functions:
+* A static website built using React and Vite on top of [Worker Assets](https://developers.cloudflare.com/workers/static-assets/)
+* A REST API built using Hono on top of [Workers KV](https://developers.cloudflare.com/kv/)
+* A [Model Context Protocol](https://modelcontextprotocol.io/introduction) Server built using on top of [Workers Durable Objects](https://developers.cloudflare.com/durable-objects/)
 
-This example application demonstrates how one may use Stytch within a Next.js 13 application using the new [App Router](https://nextjs.org/docs/app/building-your-application/routing#the-app-router). If you'd like to see an example of Stytch with Next.js's Page Router, you can find it [here](https://github.com/stytchauth/stytch-nextjs-pages-router-example).
+User and client identity is managed using [Stytch](https://stytch.com/). Put together, these three features show how to extend a traditional full-stack application for use by an AI agent.
 
-In Next.js 13's App Router, you may use both [Client](https://nextjs.org/docs/getting-started/react-essentials#client-components) and [Server](https://nextjs.org/docs/getting-started/react-essentials#server-components) components. **This example app primarily uses Client components, however you can see an example of a Server component in `/src/components/Authenticate.js`**. Our [Next.js SDK](https://stytch.com/docs/sdks/javascript-sdk) is compatible with Client components, so anywhere you use it, ensure that you include `'use client'` at the top of the component. If you'd like to use Server components, you may use our [Node Backend SDK](https://www.npmjs.com/package/stytch) to power your authentication flow.
-
-This application features Email Magic Links authentication. You can use this application's source code as a learning resource, or use it as a jumping off point for your own project. We are excited to see what you build with Stytch!
+This demo uses the [Stytch Consumer](https://stytch.com/b2c) product, which is purpose-built for Consumer SaaS authentication requirements.
+B2B SaaS applications should evaluate Stytch's [B2B](https://stytch.com/b2b) product as well.
 
 ## Set up
 
@@ -14,66 +16,81 @@ Follow the steps below to get this application fully functional and running usin
 
 ### In the Stytch Dashboard
 
-1. Create a [Stytch](https://stytch.com/) account. Once your account is set up a Project called "My first project" will be automatically created for you.
+1. Create a [Stytch](https://stytch.com/) account. Within the sign up flow select **Consumer Authentication** as the authentication type you are interested in. Once your account is set up a Project called "My first project" will be automatically created for you.
 
-2. Within your new Project, navigate to [SDK configuration](https://stytch.com/dashboard/sdk-configuration), and click **Enable SDK**.
+2. Navigate to [Frontend SDKs](https://stytch.com/dashboard/sdk-configuration?env=test) to enable the Frontend SDK in Test
 
-3. Finally, navigate to [API Keys](https://stytch.com/dashboard/api-keys). You will need the `project_id`, `secret`, and `public_token` values found on this page later on.
+3. Navigate to [Connected Apps](https://stytch.com/dashboard/connected-apps?env=test) to enable Dynamic Client Registration
+
+4. Navigate to [Project Settings](https://stytch.com/dashboard/project-settings?env=test) to view your Project ID and API keys. You will need these values later.
 
 ### On your machine
 
 In your terminal clone the project and install dependencies:
 
 ```bash
-git clone https://github.com/stytchauth/stytch-nextjs-app-router-example.git
-cd stytch-nextjs-app-router-example
-# Install dependencies, using npm.
+git clone https://github.com/stytchauth/vercel-mcp-example.git
+cd vercel-mcp-example
 npm i
 ```
 
-Next, create `.env.local` file by running the command below which copies the contents of `.env.template`.
+Next, create an `.env.local` file by running the command below which copies the contents of `.env.template`.
 
 ```bash
 cp .env.template .env.local
 ```
 
-Open `.env.local` in the text editor of your choice, and set the environment variables using the `project_id`, `secret`, and `public_token` found on [API Keys](https://stytch.com/dashboard/api-keys). Leave the `STYTCH_PROJECT_ENV` value as `test`.
+Open `.env.local` in the text editor of your choice, and set the environment variables using the `public_token` found on [Project Settings](https://stytch.com/dashboard/project-settings?env=test).
 
 ```
 # This is what a completed .env.local file will look like
-STYTCH_PROJECT_ENV=test
-STYTCH_PROJECT_ID=project-test-00000000-0000-1234-abcd-abcdef1234
-NEXT_PUBLIC_STYTCH_PUBLIC_TOKEN=public-token-test-abcd123-0000-0000-abcd-1234567abc
-STYTCH_SECRET=secret-test-12345678901234567890abcdabcd
+STYTCH_PROJECT_ID=project-test-6c24cd16-73d5-64f7-852c-8a7e7b2ccf62
+NEXT_PUBLIC_STYTCH_PUBLIC_TOKEN=public-token-test-8028777e-6e15-4faa-ba16-26cfd5b3ecb
+STYTCH_SECRET=secret-test-OMITTED
+REDIS_URL=redis://localhost:6379
 ```
 
 ## Running locally
 
-After completing all the set up steps above the application can be run with the command:
-
+The MCP Server uses Redis for communication and state management. Start Redis locally in a Docker container with
 ```bash
-npm run dev
+docker compose up -d
 ```
 
-The application will be available at [`http://localhost:3000`](http://localhost:3000).
+After completing all the setup steps above the application can be run with the command:
 
-You'll be able to login with Email Magic Links and see your Stytch User object, Stytch Session, and see how logging out works.
+```bash
+pnpm dev
+```
 
-## Next steps
+The application will be available at [`http://localhost:3000`](http://localhost:3000) and the MCP server will be available at `http://localhost:3000/mcp`.
 
-This example app showcases a small portion of what you can accomplish with Stytch. Here are a few ideas to explore:
+Test your MCP server using the [MCP Inspector](https://modelcontextprotocol.io/docs/tools/inspector)
+```bash
+npx @modelcontextprotocol/inspector@latest
+```
 
-1. Add additional login methods like [Passwords](https://stytch.com/docs/guides/passwords/sdk).
-2. Replace the prebuilt UI with your own using by using the SDK's [headless methods](https://stytch.com/docs/sdks/javascript-sdk).
-3. Add a Google OAuth button, or replace it with the high converting [Google One Tap UI](https://stytch.com/docs/guides/oauth/sdk).
-4. Secure your app further by building MFA authentication using methods like [WebAuthn](https://stytch.com/docs/sdks/javascript-sdk/webauthn).
-5. Implement SMS OTP, or extend OTP options to [Email](https://stytch.com/docs/sdks/javascript-sdk/one-time-passcodes#send-via-email) or [WhatsApp](https://stytch.com/docs/sdks/javascript-sdk/one-time-passcodes#send-via-whatsapp).
+Or with [MCP Remote](https://github.com/geelen/mcp-remote)
+```bash
+npx mcp_remote@0.1.2 http://localhost:3000/mcp
+```
+
+MCP Remote can also be used to connect to Claude Desktop or other tools that work with STDIO MCP transports.
+```json
+"todoapp": {
+  "command": "npx",
+  "args": [
+    "mcp-remote@0.1.2",
+    "http://localhost:3000/mcp"
+  ]
+}
+```
 
 ## Get help and join the community
 
 #### :speech_balloon: Stytch community Slack
 
-Join the discussion, ask questions, and suggest new features in our ​[Slack community](https://stytch.com/docs/resources/support/overview)!
+Join the discussion, ask questions, and suggest new features in our [Slack community](https://stytch.com/docs/resources/support/overview)!
 
 #### :question: Need support?
 
