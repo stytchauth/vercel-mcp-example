@@ -14,6 +14,14 @@ B2B SaaS applications should evaluate Stytch's [B2B](https://stytch.com/b2b) pro
 
 Follow the steps below to get this application fully functional and running using your own Stytch credentials.
 
+Or, ask your AI Coding Agent to do it for you
+```bash
+goose run <<EOF
+  Can you help me set up this project? Follow the Agent Setup Instructions in the README.md file.
+  Create a new Stytch project so we can start from scratch.
+EOF  
+```
+
 ### In the Stytch Dashboard
 
 1. Create a [Stytch](https://stytch.com/) account. Within the sign up flow select **Consumer Authentication** as the authentication type you are interested in. Once your account is set up a Project called "My first project" will be automatically created for you.
