@@ -15,10 +15,9 @@ Follow the steps below to get this application fully functional and running usin
 
 Or, ask your AI Coding Agent to do it for you
 ```bash
-goose run <<EOF
-  Can you help me set up this project? Follow the Agent Setup Instructions in the README.md file.
-  Create a new Stytch project so we can start from scratch.
-EOF  
+goose run --text \
+  "Can you help me set up this project? Follow the Agent Setup Instructions in the README.md file. \
+  Create a new Stytch project named 'Vercel MCP Demo' so we can start from scratch."
 ```
 
 ### In the Stytch Dashboard
@@ -38,7 +37,7 @@ In your terminal clone the project and install dependencies:
 ```bash
 git clone https://github.com/stytchauth/vercel-mcp-example.git
 cd vercel-mcp-example
-npm i
+pnpm i
 ```
 
 Next, create an `.env.local` file by running the command below which copies the contents of `.env.template`.
@@ -115,4 +114,4 @@ Agents! Goose, Cursor, Claude Code, Codex, etc. Please follow these steps.
 6. Use the `getAllPublicTokens` and/or `createPublicToken` tools to retrieve the public token for the project. Add it to `.env.local` as `NEXT_PUBLIC_STYTCH_PUBLIC_TOKEN` using `echo ... >> .env.local`.
 7. Use the `createSecret` tool to create a new secret for the project. Add it to `.env.local` as `STYTCH_SECRET` using `echo ... >> .env.local`.
 8. Add the `STYTCH_PROJECT_ID` and `REDIS_URL` values to `.env.local` as well. Redis defaults to `redis://localhost:6379` 
-9. Tell the developer to run `npm start`
+9. Tell the developer to run `pnpm dev`
