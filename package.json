@@ -9,12 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.10.2",
     "@stytch/nextjs": "^21.5.0",
     "@stytch/vanilla-js": "^5.23.4",
     "@types/node": "20.11.24",
     "@types/react": "18.2.61",
     "@types/react-dom": "18.2.19",
-    "@vercel/mcp-adapter": "^0.2.4",
+    "@vercel/mcp-adapter": "^0.4.1",
     "eslint": "8.57.0",
     "eslint-config-next": "14.1.1",
     "next": "^15.3.2",

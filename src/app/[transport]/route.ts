@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
-import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { type NextRequest, NextResponse } from "next/server";
+import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { createMcpHandler } from "@vercel/mcp-adapter";
 import { z } from "zod";
 import * as stytch from "stytch";
@@ -37,7 +37,7 @@ const authenticatedHandler = async (req: NextRequest) => {
 
   // Check if auth header exists and starts with 'Bearer '
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    console.log('NO AUTH HEADER')
+    console.log("NO AUTH HEADER");
     return NextResponse.json(
       { error: "Missing or invalid authorization header" },
       { status: 401 },
@@ -58,7 +58,7 @@ const authenticatedHandler = async (req: NextRequest) => {
     );
   }
 
-  console.log('Auth valid! creating MCP server....')
+  console.log("Auth valid! creating MCP server....");
 
   // If token is valid, proceed with the actual handler logic
   const handler = createMcpHandler(
@@ -74,9 +74,7 @@ const authenticatedHandler = async (req: NextRequest) => {
     },
     {
       redisUrl: process.env.REDIS_URL,
-      sseEndpoint: "/sse",
-      sseMessageEndpoint: "/message",
-      streamableHttpEndpoint: "/mcp",
+      basePath: "",
       verboseLogs: true,
       maxDuration: 60,
     },
