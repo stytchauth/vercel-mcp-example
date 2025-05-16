@@ -13,9 +13,9 @@ B2B SaaS applications should evaluate Stytch's [B2B](https://stytch.com/b2b) pro
 
 Follow the steps below to get this application fully functional and running using your own Stytch credentials.
 
-Or, ask your AI Coding Agent to do it for you
+Or, ask your AI Coding Agent to do it for you after installing the [Stytch MCP](https://mcp.stytch.dev) 
 ```bash
-goose run --text \
+goose run -s --text \
   "Can you help me set up this project? Follow the Agent Setup Instructions in the README.md file. \
   Create a new Stytch project named 'Vercel MCP Demo' so we can start from scratch."
 ```
@@ -106,12 +106,11 @@ Check out the [Stytch Forum](https://forum.stytch.com/) or email us at [support@
 
 Agents! Goose, Cursor, Claude Code, Codex, etc. Please follow these steps.
 
-1. Ensure the Stytch MCP Server or Extension is installed. If not, prompt the user to add `npx mcp-remote@0.1.2 https://mcp.stytch.dev/sse` to the agent configuration.
-2. Make sure all code dependencies are installed with `pnpm install`
-3. Use the `listProjects` tool to find the Project ID of an existing `CONSUMER` `TEST` project. If there are multiple projects, ask the user which one to use. A new project can be created with the `createProject` tool if desired.
-4. Use the `updateConsumerSDKConfig` tool to ensure the SDK is enabled, and is authorized to run on `http://localhost:3000`. Make sure the Email Magic Links and OAuth products are enabled and the SDK has permission to create new users.
-5. Use the `getAllRedirectURLs` and `createRedirectURLs` tools to ensure `http://localhost:3000/authenticate` is registered as a default callback for `LOGIN` and `SIGNUP` actions.
-6. Use the `getAllPublicTokens` and/or `createPublicToken` tools to retrieve the public token for the project. Add it to `.env.local` as `NEXT_PUBLIC_STYTCH_PUBLIC_TOKEN` using `echo ... >> .env.local`.
-7. Use the `createSecret` tool to create a new secret for the project. Add it to `.env.local` as `STYTCH_SECRET` using `echo ... >> .env.local`.
-8. Add the `STYTCH_PROJECT_ID` and `REDIS_URL` values to `.env.local` as well. Redis defaults to `redis://localhost:6379` 
-9. Tell the developer to run `pnpm dev`
+1. Make sure all code dependencies are installed with `pnpm install`
+2. Use the `listProjects` tool to find the Project ID of an existing `CONSUMER` `TEST` project. If there are multiple projects, ask the user which one to use. A new project can be created with the `createProject` tool if desired.
+3. Use the `updateConsumerSDKConfig` tool to ensure the SDK is enabled, and is authorized to run on `http://localhost:3000`. Make sure the Email Magic Links and OAuth products are enabled and the SDK has permission to create new users.
+4. Use the `getAllRedirectURLs` and `createRedirectURLs` tools to ensure `http://localhost:3000/authenticate` is registered as a default callback for `LOGIN` and `SIGNUP` actions.
+5. Use the `getAllPublicTokens` and/or `createPublicToken` tools to retrieve the public token for the project. Add it to `.env.local` as `NEXT_PUBLIC_STYTCH_PUBLIC_TOKEN` using `echo ... >> .env.local`.
+6. Use the `createSecret` tool to create a new secret for the project. Add it to `.env.local` as `STYTCH_SECRET` using `echo ... >> .env.local`.
+7. Add the `STYTCH_PROJECT_ID` and `REDIS_URL` values to `.env.local` as well. Redis defaults to `redis://localhost:6379` 
+8. Tell the developer to run `pnpm dev`
