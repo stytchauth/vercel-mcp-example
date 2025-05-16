@@ -15,9 +15,8 @@ Follow the steps below to get this application fully functional and running usin
 
 Or, ask your AI Coding Agent to do it for you after installing the [Stytch MCP](https://mcp.stytch.dev) 
 ```bash
-goose run -s --text \
-  "Can you help me set up this project? Follow the Agent Setup Instructions in the README.md file. \
-  Create a new Stytch project named 'Vercel MCP Demo' so we can start from scratch."
+Can you help me set up this project? Follow the Agent Setup Instructions in the README.md file.
+Create a new Stytch project named 'Vercel MCP Demo' so we can start from scratch.
 ```
 
 ### In the Stytch Dashboard
