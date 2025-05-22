@@ -88,7 +88,7 @@ MCP Remote can also be used to connect to Claude Desktop or other tools that wor
     "mcp-remote",
     "http://localhost:3000/mcp",
     "--host",
-    "127.0.0.1
+    "127.0.0.1"
   ]
 }
 ```
