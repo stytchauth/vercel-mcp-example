@@ -77,7 +77,7 @@ npx @modelcontextprotocol/inspector@latest
 
 Or with [MCP Remote](https://github.com/geelen/mcp-remote)
 ```bash
-npx mcp_remote@0.1.2 http://localhost:3000/mcp
+npx mcp-remote http://localhost:3000/mcp --host 127.0.0.1
 ```
 
 MCP Remote can also be used to connect to Claude Desktop or other tools that work with STDIO MCP transports.
@@ -85,8 +85,10 @@ MCP Remote can also be used to connect to Claude Desktop or other tools that wor
 "todoapp": {
   "command": "npx",
   "args": [
-    "mcp-remote@0.1.2",
-    "http://localhost:3000/mcp"
+    "mcp-remote",
+    "http://localhost:3000/mcp",
+    "--host",
+    "127.0.0.1
   ]
 }
 ```
