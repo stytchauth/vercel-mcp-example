@@ -25,7 +25,7 @@ Create a new Stytch project named 'Vercel MCP Demo' so we can start from scratch
 
 2. Navigate to [Frontend SDKs](https://stytch.com/dashboard/sdk-configuration?env=test) to enable the Frontend SDK in Test
 
-3. Navigate to [Connected Apps](https://stytch.com/dashboard/connected-apps?env=test) to enable Dynamic Client Registration
+3. Navigate to [Connected Apps](https://stytch.com/dashboard/connected-apps?env=test) to enable Dynamic Client Registration and configure your authorization URL as `http://localhost:3000/oauth/authorize`.
 
 4. Navigate to [Project Settings](https://stytch.com/dashboard/project-settings?env=test) to view your Project ID and API keys. You will need these values later.
 
@@ -45,22 +45,17 @@ Next, create an `.env.local` file by running the command below which copies the 
 cp .env.template .env.local
 ```
 
-Open `.env.local` in the text editor of your choice, and set the environment variables using the `public_token` found on [Project Settings](https://stytch.com/dashboard/project-settings?env=test).
+Open `.env.local` in the text editor of your choice, and set the environment variables using the values found on [Project Settings](https://stytch.com/dashboard/project-settings?env=test).
 
 ```
 # This is what a completed .env.local file will look like
-STYTCH_PROJECT_ID=project-test-6c24cd16-73d5-64f7-852c-8a7e7b2ccf62
 NEXT_PUBLIC_STYTCH_PUBLIC_TOKEN=public-token-test-8028777e-6e15-4faa-ba16-26cfd5b3ecb
+STYTCH_PROJECT_ID=project-test-6c24cd16-73d5-64f7-852c-8a7e7b2ccf62
 STYTCH_SECRET=secret-test-OMITTED
-REDIS_URL=redis://localhost:6379
+STYTCH_DOMAIN=shrouded-source-1584.customers.stytch.dev
 ```
 
 ## Running locally
-
-The MCP Server uses Redis for communication and state management when using the SSE transport. Start Redis locally in a Docker container with
-```bash
-docker compose up -d
-```
 
 After completing all the setup steps above the application can be run with the command:
 
@@ -77,7 +72,7 @@ npx @modelcontextprotocol/inspector@latest
 
 Or with [MCP Remote](https://github.com/geelen/mcp-remote)
 ```bash
-npx mcp_remote@0.1.2 http://localhost:3000/mcp
+npx mcp-remote http://localhost:3000/mcp
 ```
 
 MCP Remote can also be used to connect to Claude Desktop or other tools that work with STDIO MCP transports.
@@ -85,7 +80,7 @@ MCP Remote can also be used to connect to Claude Desktop or other tools that wor
 "todoapp": {
   "command": "npx",
   "args": [
-    "mcp-remote@0.1.2",
+    "mcp-remote",
     "http://localhost:3000/mcp"
   ]
 }
@@ -111,5 +106,5 @@ Agents! Goose, Cursor, Claude Code, Codex, etc. Please follow these steps.
 4. Use the `getAllRedirectURLs` and `createRedirectURLs` tools to ensure `http://localhost:3000/authenticate` is registered as a default callback for `LOGIN` and `SIGNUP` actions.
 5. Use the `getAllPublicTokens` and/or `createPublicToken` tools to retrieve the public token for the project. Add it to `.env.local` as `NEXT_PUBLIC_STYTCH_PUBLIC_TOKEN` using `echo ... >> .env.local`.
 6. Use the `createSecret` tool to create a new secret for the project. Add it to `.env.local` as `STYTCH_SECRET` using `echo ... >> .env.local`.
-7. Add the `STYTCH_PROJECT_ID` and `REDIS_URL` values to `.env.local` as well. Redis defaults to `redis://localhost:6379` 
+7. Add the `STYTCH_PROJECT_ID` and `STYTCH_DOMAIN` to `.env.local` as well
 8. Tell the developer to run `pnpm dev`
