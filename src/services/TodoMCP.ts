@@ -2,27 +2,31 @@ import {
   McpServer,
   ResourceTemplate,
 } from "@modelcontextprotocol/sdk/server/mcp";
+import { AuthInfo } from '@modelcontextprotocol/sdk/server/auth/types.js';
 import { Todo, TodoService } from "@/src/services/TodoService";
 import { z } from "zod";
 import * as stytch from "stytch";
 
-type OAuthClaims = Awaited<ReturnType<typeof client.idp.introspectTokenLocal>>;
-
 const client = new stytch.Client({
   project_id: process.env.STYTCH_PROJECT_ID as string,
   secret: process.env.STYTCH_SECRET as string,
+  custom_base_url: `https://${process.env.STYTCH_DOMAIN}`,
 });
 
-export const initializeMCPServer =
-  (claims: OAuthClaims) => (server: McpServer) => {
-    const todoService = new TodoService({
+export const initializeMCPServer = (server: McpServer) => {
+    const todoService = (authInfo: AuthInfo | undefined) =>  {
+      if(!authInfo) throw new Error("No authInfo provided")
+      const { subject } = authInfo.extra as { subject: string };
+
+      return new TodoService({
       get: () =>
         client.users
-          .get({ user_id: claims.subject })
+          .get({ user_id: subject })
           .then((user) => user.untrusted_metadata?.todos || []),
       set: async (todos: Todo[]) =>
-        void client.users.update({ user_id: claims.subject, untrusted_metadata: { todos } }),
+        void client.users.update({ user_id: subject, untrusted_metadata: { todos } }),
     });
+  }
 
     const formatResponse = (
       description: string,
@@ -40,11 +44,11 @@ export const initializeMCPServer =
       };
     };
 
-    server.tool("whoami", "Who am i anyway", async () => ({
+    server.tool("whoami", "Who am i anyway", async ({authInfo}) => ({
       content: [
         {
           type: "text",
-          text: `JWT Contents: ${JSON.stringify(claims, null, 2)}`,
+          text: `AuthInfo Contents: ${JSON.stringify(authInfo, null, 2)}`,
         },
       ],
     }));
@@ -52,8 +56,8 @@ export const initializeMCPServer =
     server.resource(
       "Todos",
       new ResourceTemplate("todoapp://todos/{id}", {
-        list: async () => {
-          const todos = await todoService.get();
+        list: async ({authInfo}) => {
+          const todos = await todoService(authInfo).get();
 
           return {
             resources: todos.map((todo) => ({
@@ -63,8 +67,8 @@ export const initializeMCPServer =
           };
         },
       }),
-      async (uri, { id }) => {
-        const todos = await todoService.get();
+      async (uri, { id }, {authInfo}) => {
+        const todos = await todoService(authInfo).get();
         const todo = todos.find((todo) => todo.id === id);
         return {
           contents: [
@@ -83,8 +87,8 @@ export const initializeMCPServer =
       "createTodo",
       "Add a new TODO task",
       { todoText: z.string() },
-      async ({ todoText }) => {
-        const todos = await todoService.add(todoText);
+      async ({ todoText }, {authInfo}) => {
+        const todos = await todoService(authInfo).add(todoText);
         return formatResponse("TODO added successfully", todos);
       },
     );
@@ -93,8 +97,8 @@ export const initializeMCPServer =
       "markTodoComplete",
       "Mark a TODO as complete",
       { todoID: z.string() },
-      async ({ todoID }) => {
-        const todos = await todoService.markCompleted(todoID);
+      async ({ todoID }, {authInfo}) => {
+        const todos = await todoService(authInfo).markCompleted(todoID);
         return formatResponse("TODO completed successfully", todos);
       },
     );
@@ -103,8 +107,8 @@ export const initializeMCPServer =
       "deleteTodo",
       "Mark a TODO as deleted",
       { todoID: z.string() },
-      async ({ todoID }) => {
-        const todos = await todoService.delete(todoID);
+      async ({ todoID }, {authInfo}) => {
+        const todos = await todoService(authInfo).delete(todoID);
         return formatResponse("TODO deleted successfully", todos);
       },
     );

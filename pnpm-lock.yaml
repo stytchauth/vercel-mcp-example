@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@modelcontextprotocol/sdk':
-        specifier: ^1.10.2
-        version: 1.10.2
+        specifier: ^1.13.0
+        version: 1.13.0
       '@stytch/nextjs':
         specifier: ^21.5.0
         version: 21.5.0(@stytch/vanilla-js@5.23.4)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -27,8 +27,8 @@ importers:
         specifier: 18.2.19
         version: 18.2.19
       '@vercel/mcp-adapter':
-        specifier: ^0.4.1
-        version: 0.4.1(next@15.3.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0))
+        specifier: ^0.11.1
+        version: 0.11.1(@modelcontextprotocol/sdk@1.13.0)(next@15.3.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0))
       eslint:
         specifier: 8.57.0
         version: 8.57.0
@@ -213,8 +213,8 @@ packages:
     resolution: {integrity: sha512-O8jcjabXaleOG9DQ0+ARXWZBTfnP4WNAqzuiJK7ll44AmxGKv/J2M4TPjxjY3znBCfvBXFzucm1twdyFybFqEA==}
     engines: {node: '>=12'}
 
-  '@modelcontextprotocol/sdk@1.10.2':
-    resolution: {integrity: sha512-rb6AMp2DR4SN+kc6L1ta2NCpApyA9WYNx3CrTSZvGxq9wH71bRur+zRqPfg0vQ9mjywR7qZdX2RGHOPq3ss+tA==}
+  '@modelcontextprotocol/sdk@1.13.0':
+    resolution: {integrity: sha512-P5FZsXU0kY881F6Hbk9GhsYx02/KgWK1DYf7/tyE/1lcFKhDYPQR9iYjhQXJn+Sg6hQleMo3DB7h7+p4wgp2Lw==}
     engines: {node: '>=18'}
 
   '@napi-rs/wasm-runtime@0.2.10':
@@ -491,10 +491,15 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@vercel/mcp-adapter@0.4.1':
-    resolution: {integrity: sha512-/P1J1KGbQieNT9dKSt4Y+ZrLcnuf6W1cUMR0V+AcWRfQs7ilz64GaLVdpyUIoZFb45VHqRvTVEZ8YmQspEM/Kw==}
+  '@vercel/mcp-adapter@0.11.1':
+    resolution: {integrity: sha512-6IUuBSrHhc4nn4g/B64LCPDJGAQsChs60HKSzcifkQd7/0bgiIwAQ29ap6FdFHwYvRsXC4UcVPRcBUxhK9PsgQ==}
+    hasBin: true
     peerDependencies:
+      '@modelcontextprotocol/sdk': ^1.12.0
       next: '>=13.0.0'
+    peerDependenciesMeta:
+      next:
+        optional: true
 
   accepts@2.0.0:
     resolution: {integrity: sha512-5cvg6CtKwfgdmVqY1WIiXKc3Q1bkRqGLi+2W/6ao+6Y7gu/RCwRuAhGEzh5B4KlszSuTLgZYuqFqo5bImjNKng==}
@@ -639,6 +644,10 @@ packages:
     resolution: {integrity: sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==}
     engines: {node: '>=10'}
 
+  chalk@5.4.1:
+    resolution: {integrity: sha512-zgVZuo2WcZgfUEmsn6eO3kINexW8RAE4maiQ8QNs8CtpPCSyMiYsULR3HQYkm3w8FIA3SberyMJMSldGsW+U3w==}
+    engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
+
   client-only@0.0.1:
     resolution: {integrity: sha512-IV3Ou0jSMzZrd3pZ48nLkT9DA7Ag1pnPzaiQhpW7c3RbcqqzvzzVu+L8gfqMp/8IM2MQtSiqaCxrrcfu8I8rMA==}
 
@@ -659,6 +668,10 @@ packages:
   color@4.2.3:
     resolution: {integrity: sha512-1rXeuUUiGGrykh+CeBdu5Ie7OJwinCgQY0bc7GCRxy5xVHy+moaqkpL/jqQq0MtQOeYcrqEz4abc5f0KtU7W4A==}
     engines: {node: '>=12.5.0'}
+
+  commander@11.1.0:
+    resolution: {integrity: sha512-yPVavfyCcRhmorC7rWlkHn15b4wDVgVmBA7kV4QVBsF7kv/9TKJAbAXVTxvTnwP8HHKjRCJDClKbciiYS7p0DQ==}
+    engines: {node: '>=16'}
 
   concat-map@0.0.1:
     resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
@@ -2070,8 +2083,9 @@ snapshots:
       wrap-ansi: 8.1.0
       wrap-ansi-cjs: wrap-ansi@7.0.0
 
-  '@modelcontextprotocol/sdk@1.10.2':
+  '@modelcontextprotocol/sdk@1.13.0':
     dependencies:
+      ajv: 6.12.6
       content-type: 1.0.5
       cors: 2.8.5
       cross-spawn: 7.0.6
@@ -2313,13 +2327,14 @@ snapshots:
   '@unrs/resolver-binding-win32-x64-msvc@1.7.2':
     optional: true
 
-  '@vercel/mcp-adapter@0.4.1(next@15.3.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0))':
+  '@vercel/mcp-adapter@0.11.1(@modelcontextprotocol/sdk@1.13.0)(next@15.3.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0))':
     dependencies:
-      '@modelcontextprotocol/sdk': 1.10.2
-      next: 15.3.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      '@modelcontextprotocol/sdk': 1.13.0
+      chalk: 5.4.1
+      commander: 11.1.0
       redis: 4.7.1
-    transitivePeerDependencies:
-      - supports-color
+    optionalDependencies:
+      next: 15.3.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
 
   accepts@2.0.0:
     dependencies:
@@ -2493,6 +2508,8 @@ snapshots:
       ansi-styles: 4.3.0
       supports-color: 7.2.0
 
+  chalk@5.4.1: {}
+
   client-only@0.0.1: {}
 
   cluster-key-slot@1.1.2: {}
@@ -2514,6 +2531,8 @@ snapshots:
       color-convert: 2.0.1
       color-string: 1.9.1
     optional: true
+
+  commander@11.1.0: {}
 
   concat-map@0.0.1: {}
 
