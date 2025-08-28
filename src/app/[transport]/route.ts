@@ -9,7 +9,7 @@ import { AuthInfo } from "@modelcontextprotocol/sdk/server/auth/types.js";
 const client = new stytch.Client({
   project_id: process.env.STYTCH_PROJECT_ID as string,
   secret: process.env.STYTCH_SECRET as string,
-  custom_base_url: `https://${process.env.STYTCH_DOMAIN}`,
+  custom_base_url: process.env.STYTCH_DOMAIN,
 });
 
 const authenticatedHandler = withMcpAuth(

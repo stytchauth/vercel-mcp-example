@@ -52,7 +52,7 @@ Open `.env.local` in the text editor of your choice, and set the environment var
 NEXT_PUBLIC_STYTCH_PUBLIC_TOKEN=public-token-test-8028777e-6e15-4faa-ba16-26cfd5b3ecb
 STYTCH_PROJECT_ID=project-test-6c24cd16-73d5-64f7-852c-8a7e7b2ccf62
 STYTCH_SECRET=secret-test-OMITTED
-STYTCH_DOMAIN=shrouded-source-1584.customers.stytch.dev
+STYTCH_DOMAIN=https://shrouded-source-1584.customers.stytch.dev
 ```
 
 ## Running locally
